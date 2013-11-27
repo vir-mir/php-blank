@@ -13,7 +13,7 @@ use library\Controller;
 class Main extends Controller{
 
     public function index() {
-        $this->loadTemplate('site/main.html');
+        $this->loadTemplate('site/main.twig');
     }
 
 } 

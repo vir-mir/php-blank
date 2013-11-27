@@ -27,20 +27,39 @@ class Controller {
     }
 
     public function load404() {
-        $this->loadTemplate('site/404.html', array());
+        $this->loadTemplate('site/404.twig', array());
     }
 
     public function load403() {
-        $this->loadTemplate('site/403.html', array());
+        $this->loadTemplate('site/403.twig', array());
     }
 
     protected function loadTemplate($templateName, $paramExternal = array(), $head=null, $footer=null) {
+
+        $template = & Singleton::getKernel()->getConfig('template');
+        if ($template['template'] == 'twig') {
+
+            require_once __MAINROOT__ . DIRECTORY_SEPARATOR . 'library/Twig/Autoloader.php';
+
+            \Twig_Autoloader::register();
+
+            if ($head===true) {
+                $loader = new \Twig_Loader_String();
+            } else {
+                $loader = new \Twig_Loader_Filesystem(__MAINROOT__ . DIRECTORY_SEPARATOR . $template['folder']);
+            }
+            $twig = new \Twig_Environment($loader);
+
+            echo $twig->render($templateName, $paramExternal);
+
+            return ;
+        }
+
 
         if ($paramExternal) {
             foreach ($paramExternal as $kExternal=>$vExternal) $$kExternal = $vExternal;
         }
 
-        $template = & Singleton::getKernel()->getConfig('template');
 
         $folder = $template['folder'];
         $head = $head?$head:__MAINROOT__ . DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR . $template['head'];

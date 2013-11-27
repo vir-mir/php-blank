@@ -10,8 +10,9 @@
 return array(
     'template' => array(
         'folder' => 'template',
-        'head' => 'site/head.html',
-        'footer' => 'site/footer.html',
+        'head' => '', // is template = html
+        'footer' => '', // is template = html
+        'template' => 'twig', // html, twig
     ),
 
     'helpers' => 'debug,fn',
