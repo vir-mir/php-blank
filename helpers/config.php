@@ -17,6 +17,10 @@ return array(
 
     'helpers' => 'debug,fn',
 
+    'header' => array(
+        "Content-Type: text/html; charset=utf-8",
+    ),
+
     '_database' => array( // для работы измените _database на database
         'hostname' => 'komtender.local',
         'username' => 'root',
@@ -24,7 +28,15 @@ return array(
         'dbname' => 'holiday_holiday',
     ),
 
-    'stopFn' => array('load', 'loadTemplate', 'loadTemplateTwig', 'load403', 'load404'),
+    'stopFn' => array(
+        'load',
+        'loadTemplate',
+        'loadTemplateTwig',
+        'loadTemplateHtml',
+        '_setHeaders',
+        'load403',
+        'load404',
+    ),
 
     404 => '404.twig',
     403 => '403.twig',

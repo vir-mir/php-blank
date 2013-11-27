@@ -24,8 +24,6 @@ function __autoload($name) {
 
 }
 
-header("Content-Type: text/html; charset=utf-8");
-
 Singleton::getKernel()->run();
 
 
