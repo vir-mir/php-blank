@@ -27,11 +27,11 @@ class Controller {
     }
 
     public function load404() {
-        $this->loadTemplate('site/404.twig', array());
+        $this->loadTemplate(Singleton::getKernel()->getConfig(404), array());
     }
 
     public function load403() {
-        $this->loadTemplate('site/403.twig', array());
+        $this->loadTemplate(Singleton::getKernel()->getConfig(403), array());
     }
 
     protected function loadTemplate($templateName, $paramExternal = array(), $head=null, $footer=null) {

@@ -9,7 +9,7 @@
 
 return array(
     'template' => array(
-        'folder' => 'template',
+        'folder' => 'template/site',
         'head' => '', // is template = html
         'footer' => '', // is template = html
         'template' => 'twig', // html, twig
@@ -23,5 +23,8 @@ return array(
         'pwd' => '',
         'dbname' => 'holiday_holiday',
     ),
+
+    404 => '404.twig',
+    403 => '403.twig',
 
 );
