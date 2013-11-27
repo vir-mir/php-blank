@@ -24,6 +24,8 @@ return array(
         'dbname' => 'holiday_holiday',
     ),
 
+    'stopFn' => array('load', 'loadTemplate', 'loadTemplateTwig', 'load403', 'load404'),
+
     404 => '404.twig',
     403 => '403.twig',
 

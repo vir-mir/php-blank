@@ -19,7 +19,7 @@ class Controller {
     }
 
     public function load($fn, $param) {
-        if ($fn == 'load' || $fn == 'loadTemplate') {
+        if (in_array($fn, Singleton::getKernel()->getConfig('stopFn'))) {
             $this->load404();
         } else {
             $this->$fn($param);
@@ -34,24 +34,29 @@ class Controller {
         $this->loadTemplate(Singleton::getKernel()->getConfig(403), array());
     }
 
+    protected function loadTemplateTwig($templateName, $paramExternal = array(), $string=null) {
+        require_once __MAINROOT__ . DIRECTORY_SEPARATOR . 'library/Twig/Autoloader.php';
+
+        $template = & Singleton::getKernel()->getConfig('template');
+
+        \Twig_Autoloader::register();
+
+        if ($string===true) {
+            $loader = new \Twig_Loader_String();
+        } else {
+            $loader = new \Twig_Loader_Filesystem(__MAINROOT__ . DIRECTORY_SEPARATOR . $template['folder']);
+        }
+        $twig = new \Twig_Environment($loader);
+
+        echo $twig->render($templateName, $paramExternal);
+    }
+
     protected function loadTemplate($templateName, $paramExternal = array(), $head=null, $footer=null) {
 
         $template = & Singleton::getKernel()->getConfig('template');
+
         if ($template['template'] == 'twig') {
-
-            require_once __MAINROOT__ . DIRECTORY_SEPARATOR . 'library/Twig/Autoloader.php';
-
-            \Twig_Autoloader::register();
-
-            if ($head===true) {
-                $loader = new \Twig_Loader_String();
-            } else {
-                $loader = new \Twig_Loader_Filesystem(__MAINROOT__ . DIRECTORY_SEPARATOR . $template['folder']);
-            }
-            $twig = new \Twig_Environment($loader);
-
-            echo $twig->render($templateName, $paramExternal);
-
+            $this->loadTemplateTwig($templateName, $paramExternal, $head);
             return ;
         }
 
